@@ -113,10 +113,11 @@ public class RedPacketController {
 			RedPacketResult result = new RedPacketResult(RedPacketType.ACTIVITY_OVER.value, 1, "");
 			return gson.toJson(result);
 		}
-		if (!isCanDraw()) {// 未在时间段
-			RedPacketResult result = new RedPacketResult(RedPacketType.AWARD_OVER.value, 1, "");
-			return gson.toJson(result);
-		}
+		// if (!isCanDraw()) {// 未在时间段
+		// RedPacketResult result = new
+		// RedPacketResult(RedPacketType.AWARD_OVER.value, 1, "");
+		// return gson.toJson(result);
+		// }
 		final AuthorizeLog log = AuthorizeLogService.openidCacheMap.get(openId);
 		if (log.getCanDrawNum() <= 0) {
 			RedPacketResult result = new RedPacketResult(RedPacketType.NOT_TIME.value, 1, "");
@@ -133,15 +134,16 @@ public class RedPacketController {
 		int money = gameController.draw();// 抽奖
 		int type;
 		if (money == 0) {
-			if (!log.isShare()) {
-				type = RedPacketType.FIRST_NOT.value;
-			} else {
-				type = RedPacketType.AGAIN_NOT.value;
-			}
+			// if (!log.isShare()) {
+			// type = RedPacketType.FIRST_NOT.value;
+			// } else {
+			// type = RedPacketType.AGAIN_NOT.value;
+			// }
+			type = RedPacketType.AWARD_OVER.value;
 			RedPacketResult result = new RedPacketResult(type, 1, "");
 			return gson.toJson(result);
 		} else {
-			if (!log.isShare()) {
+			if (money == GameController.SHI) {
 				type = RedPacketType.FIRST_GET.value;
 			} else {
 				type = RedPacketType.AGAIN_GET.value;
@@ -165,7 +167,7 @@ public class RedPacketController {
 					param.put("total_num", String.valueOf(1));
 					param.put("wishing", "感谢您的夸赞，我们会继续努力的！");
 					param.put("client_ip", getIp());
-					param.put("act_name", "我被表扬了!赞下就送礼!");
+					param.put("act_name", "人品爆发就能带走奖品");
 					param.put("remark", "万份红包，快来抢！");
 
 					Set<String> keys = new TreeSet<>(param.keySet());
@@ -206,6 +208,9 @@ public class RedPacketController {
 					}
 					// 保存到数据库
 					redPacketLogService.add(new RedPacketLog(openId, finalMoney, isSend));
+					if (!isSend) {
+						gameController.addAward(finalMoney);
+					}
 				}
 			});
 			return gson.toJson(result);
@@ -336,7 +341,7 @@ public class RedPacketController {
 
 			ticket = cache.get("ticket");
 		}
-		LogManager.info("ticket=" + ticket.value);
+		// LogManager.info("ticket=" + ticket.value);
 		String nonceStr = MyUtil.getStr(16);
 		long timestamp = System.currentTimeMillis() / 1000;
 		String signStr = "jsapi_ticket=" + ticket.value + "&noncestr=" + nonceStr + "&timestamp=" + timestamp + "&url="
@@ -480,7 +485,7 @@ public class RedPacketController {
 				return gson.toJson(result);
 			}
 			log.setShare(true);
-			log.setCanDrawNum(log.getCanDrawNum() + 1);
+			// log.setCanDrawNum(log.getCanDrawNum() + 1);
 			authorizeLogService.update(log);
 
 			Result result = new Result(1, "");
