@@ -93,5 +93,7 @@
 		<property name="mchId" value="1379926202"></property>
 		<property name="key" value="woaiodc12878349011287834901woaio"></property>
 		<property name="certsPath" value="D://cert/apiclient_cert.p12"></property>
+		<property name="beginHour" value="10"></property>
+		<property name="endHour" value="18"></property>
 	</bean>
 </beans>

@@ -285,7 +285,7 @@ public class RedPacketController {
 
 	private boolean isCanDraw() {
 		int hour = MyUtil.getCurrentHour();
-		if (hour >= 10 && hour < 18) {
+		if (hour >= gameConfig.getBeginHour() && hour < gameConfig.getEndHour()) {
 			return true;
 		}
 		return false;

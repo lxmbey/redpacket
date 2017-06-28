@@ -10,6 +10,8 @@ public class GameConfig {
 	private String mchId;
 	private String key;
 	private String certsPath;// 证书路径
+	private int beginHour;// 能抽中奖的开始时间点
+	private int endHour;// 能抽中奖的结束时间点
 
 	public Date begin;
 	public Date end;
@@ -68,6 +70,22 @@ public class GameConfig {
 
 	public void setCertsPath(String certsPath) {
 		this.certsPath = certsPath;
+	}
+
+	public int getBeginHour() {
+		return beginHour;
+	}
+
+	public void setBeginHour(int beginHour) {
+		this.beginHour = beginHour;
+	}
+
+	public int getEndHour() {
+		return endHour;
+	}
+
+	public void setEndHour(int endHour) {
+		this.endHour = endHour;
 	}
 
 }
