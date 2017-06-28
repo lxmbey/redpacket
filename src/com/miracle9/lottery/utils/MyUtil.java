@@ -1,19 +1,16 @@
 package com.miracle9.lottery.utils;
 
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
 import org.apache.commons.lang.StringUtils;
-import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 
@@ -21,6 +18,7 @@ public class MyUtil {
 	private static String str = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789";
 	private static Random random = new Random();
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	private static SimpleDateFormat datetimeSdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private static SimpleDateFormat orderIdSdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 
 	/**
@@ -42,6 +40,15 @@ public class MyUtil {
 	public static Date dateformat(String date) {
 		try {
 			return sdf.parse(date);
+		} catch (ParseException e) {
+			LogManager.error(e);
+			return null;
+		}
+	}
+	
+	public static Date datetimeFormat(String date) {
+		try {
+			return datetimeSdf.parse(date);
 		} catch (ParseException e) {
 			LogManager.error(e);
 			return null;
@@ -187,6 +194,7 @@ public class MyUtil {
 		return doc.asXML();
 	}
 
+	@SuppressWarnings("unchecked")
 	private static void __buildMap2xmlBody(Element body, Map<String, Object> vo) {
 		if (vo != null) {
 			Iterator<String> it = vo.keySet().iterator();

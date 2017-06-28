@@ -24,4 +24,7 @@ public class GameController {
 		return 0;
 	}
 
+	public synchronized void addAward() {
+		AwardConfigService.awardTime -= AwardConfigService.config.getDayinterval();
+	}
 }

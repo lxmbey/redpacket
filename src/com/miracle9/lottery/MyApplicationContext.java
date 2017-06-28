@@ -18,8 +18,8 @@ public class MyApplicationContext implements ApplicationContextAware {
 		ctx.getBean(AuthorizeLogService.class).loadCache();
 
 		GameConfig gameConfig = ctx.getBean(GameConfig.class);
-		gameConfig.begin = MyUtil.dateformat(gameConfig.getBeginDate());
-		gameConfig.end = MyUtil.dateformat(gameConfig.getEndDate());
+		gameConfig.begin = MyUtil.datetimeFormat(gameConfig.getBeginDate());
+		gameConfig.end = MyUtil.datetimeFormat(gameConfig.getEndDate());
 	}
 
 }

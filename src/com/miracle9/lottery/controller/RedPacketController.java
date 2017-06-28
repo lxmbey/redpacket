@@ -206,6 +206,9 @@ public class RedPacketController {
 					}
 					// 保存到数据库
 					redPacketLogService.add(new RedPacketLog(openId, finalMoney, isSend));
+					if (!isSend) {// 没有发成功
+						gameController.addAward();
+					}
 				}
 			});
 			return gson.toJson(result);
@@ -336,7 +339,6 @@ public class RedPacketController {
 
 			ticket = cache.get("ticket");
 		}
-		LogManager.info("ticket=" + ticket.value);
 		String nonceStr = MyUtil.getStr(16);
 		long timestamp = System.currentTimeMillis() / 1000;
 		String signStr = "jsapi_ticket=" + ticket.value + "&noncestr=" + nonceStr + "&timestamp=" + timestamp + "&url="
